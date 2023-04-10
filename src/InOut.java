@@ -1,2 +1,4 @@
-package PACKAGE_NAME;public class InOut {
+public interface InOut {
+    void save(FamilyTree f);
+    void load(FamilyTree f);
 }
