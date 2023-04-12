@@ -1,50 +1,24 @@
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        DowloadData data = new DowloadData();
-        FamilyTree familyIvanov = new FamilyTree();
-
-        Human motherIvanov = new Human("Мария", Gender.female);
-        Human fatherIvanov = new Human("Иван", Gender.male);
-        Human childIvanov1 = new Human("Петр", motherIvanov, fatherIvanov, Gender.male, null, null);
-        Human childIvanov2 = new Human("Алиса", motherIvanov, fatherIvanov, Gender.female, null, null);
-        Human childIvanov3 = new Human("Костя", motherIvanov, fatherIvanov, Gender.male, null, null);
-        Human childIvanov4 = new Human("Саша", null, childIvanov3, Gender.male, null, null);
-
-        familyIvanov.addHuman(motherIvanov);
-        familyIvanov.addHuman(fatherIvanov);
-        familyIvanov.addHuman(childIvanov1);
-        familyIvanov.addHuman(childIvanov2);
-        familyIvanov.addHuman(childIvanov3);
-        familyIvanov.addHuman(childIvanov4);
 
 
-        data.save(familyIvanov, "familyIvanov.bin");
+        FamilyTree test = new FamilyTree();
+        Service service = new Service(test);
 
-        FamilyTree familySidorov = new FamilyTree();
+        service.addHuman("Андрей", "Ломов", LocalDate.of(1976, 11, 21), Sex.male);
+        service.addHuman("Лера", "Пробоева", LocalDate.of(1978, 6, 15), Sex.female);
+        service.addHuman("Артур", "Ломов", LocalDate.of(2001, 3, 8),
+                Sex.male, service.getFamilyGroup().familyTree.get(0), service.getFamilyGroup().familyTree.get(1));
+        service.addHuman("Крис", "Вскрывакина", LocalDate.of(2003, 1, 27), Sex.female);
+        service.addHuman("Алина", "Ломова", LocalDate.of(2022, 8, 18),
+                Sex.female, service.getFamilyGroup().familyTree.get(2),service.getFamilyGroup().familyTree.get(3));
 
-        Human motherSidorov = new Human("Жанна", Gender.female);
-        Human fatherSidorov = new Human("Жорж", Gender.male);
-        Human childSidorov = new Human("Николай", motherSidorov, fatherSidorov, Gender.male, null, null);
-        familySidorov.addHuman(motherSidorov);
-        familySidorov.addHuman(fatherSidorov);
-        familySidorov.addHuman(childSidorov);
+        service.sortByLastName();
+        for (Human item: test) {
+            System.out.println(item);
 
-        data.save(familySidorov, "familySidorov.bin");
-
-        FamilyTree family1 = new FamilyTree();
-        FamilyTree family2 = new FamilyTree();
-
-        family1 = data.load("familyIvanov.bin");
-        family2 = data.load("familySidorov.bin");
-
-        System.out.println(family1);
-        System.out.println(family2);
-
-
+        }
     }
-
 }
