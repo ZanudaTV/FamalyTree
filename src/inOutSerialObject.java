@@ -19,4 +19,4 @@ public class inOutSerialObject implements InOutFiles, Serializable {
             System.out.println(ex.getMessage());
         }
     }
-}
+} 
