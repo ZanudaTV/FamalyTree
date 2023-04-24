@@ -1,3 +1,5 @@
+package Humans;
+
 import java.util.Comparator;
 
 public class HumanComparatorByLastName implements Comparator<Human> {

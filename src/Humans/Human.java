@@ -1,3 +1,6 @@
+package Humans;
+import Animal.Animal;
+import Sex.Sex;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -6,13 +9,13 @@ import java.util.Objects;
 
 import static java.lang.String.*;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, Comparable<Human>, Animal {
     private int id;
-    private String firstName;
-    private String lastname;
-    private LocalDate dateOfBirth;
-    private LocalDate dateOfDeath;
-    private String sex;
+    private final String firstName;
+    private final String lastname;
+    private final LocalDate dateOfBirth;
+    private final LocalDate dateOfDeath;
+    private final String sex;
     private Human mather;
     private Human father;
     private final List<Human> childrens;
@@ -22,9 +25,10 @@ public class Human implements Serializable, Comparable<Human> {
      * @param lastname    Фамилия
      * @param dateOfBirth дата рождения (Формат записи "ГГГГ-ММ-ДД")
      * @param sex         пол(male or female)
-     * @param mather      ссылка на объект мать Human(sex female)
-     * @param father      ссылка на объект отец Human(sex male)
+     * @param mather      ссылка на объект мать Humans.Human(sex female)
+     * @param father      ссылка на объект отец Humans.Human(sex male)
      */
+
     public Human(int id, String firstName, String lastname, LocalDate dateOfBirth, Sex sex, Human mather, Human father) {
         this.id = id;
         this.firstName = firstName;
@@ -35,21 +39,7 @@ public class Human implements Serializable, Comparable<Human> {
         this.mather = mather;
         this.father = father;
         this.childrens = new ArrayList<>();
-
     }
-
-    public Human(int id, String firstName, String lastname, LocalDate dateOfBirth, Sex sex) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastname = lastname;
-        this.sex = valueOf(sex);
-        this.dateOfBirth = dateOfBirth;
-        this.dateOfDeath = null;
-        this.mather = null;
-        this.father = null;
-        this.childrens = new ArrayList<>();
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -69,7 +59,6 @@ public class Human implements Serializable, Comparable<Human> {
     public int getId() {
         return id;
     }
-
 
     public Human getMather() {
         return mather;
@@ -98,15 +87,11 @@ public class Human implements Serializable, Comparable<Human> {
     /**
      * Добавить ребенка в лист детей у человека
      */
-    public void addChildren(Human human) {
+    public void addChildren(Animal human) {
 
         if (!childrens.contains(human)) {
-            childrens.add(human);
+            childrens.add((Human) human);
         }
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public StringBuilder getHumanInfo() {
@@ -125,7 +110,6 @@ public class Human implements Serializable, Comparable<Human> {
         sbH.append(this.sex);
         return sbH;
     }
-
     @Override
     public String toString() {
         if (dateOfDeath != null) {
@@ -133,7 +117,6 @@ public class Human implements Serializable, Comparable<Human> {
         }
         return " %s %s (id %d) \n  Дата рождения - %s \n".formatted(firstName, lastname, id, dateOfBirth);
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -151,8 +134,5 @@ public class Human implements Serializable, Comparable<Human> {
     public int compareTo(Human o) {
         return firstName.compareTo(o.firstName);
 
-
     }
-
-
 }
